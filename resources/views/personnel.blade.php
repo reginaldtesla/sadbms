@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <title>All User Profiles</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/build/assets/css/viewprofile.css" />
+    <link rel="stylesheet" href="build/assets/css/personnel.css" />
     <script>
         function openModal(event, index) {
             if (event && typeof event.preventDefault === 'function') event.preventDefault();
@@ -36,28 +36,16 @@
                 <h2>All User Profiles</h2>
             </div>
             <div class="page-header">
-                <form action="{{ url('/viewprofile') }}" method="GET" class="view-id-search" role="search" aria-label="Search profiles by name and year">
+                <form action="{{ url('/viewprofile') }}" method="GET" class="view-id-search" role="search" aria-label="Search profiles by name">
                     @csrf
-                    <input type="text" name="name" placeholder="Search by Name" value="{{ request('name') }}" aria-label="Profile Name">
-
-                    <select name="year" aria-label="Select Year" onchange="this.form.submit()">
-                        <option value="">All Years</option>
-                        @php
-                            $currentYear = date('Y');
-                            $startYear = $currentYear - 10; // Show last 10 years
-                        @endphp
-                        @for ($year = $currentYear; $year >= $startYear; $year--)
-                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
-                        @endfor
-                    </select>
+                    <input type="text" name="name" placeholder="Search by Name" value="{{ request('name') }}" aria-label="Profile Name" />
                     <button type="submit">Search</button>
                     <a href="{{ url('/viewprofile') }}" class="reset-link">Reset</a>
                 </form>
             </div>
             <nav class="nav">
-                <a href="{{ url('/dashboard') }}">Dashboard</a>
-                <a href="{{ url('/addprofile') }}">Add Profile</a>
-                <a href="{{ url('/removeprofile') }}">Remove Profile</a>
+                <a href="{{ url('/personnel/add-profile') }}">Add Profile</a>
+                <a href="{{ url('/personnelsdashboard') }}">Dashboard</a>
             </nav>
         </header>
         <main class="main-content">
@@ -74,10 +62,10 @@
                         <p>Role: {{ $profile['assigned_role'] }}</p>
                         <p>Personnel Type: {{ $profile['personnel_type'] }}</p>
                         <a href="#" class="view-details" onclick="openModal(event, {{ $loop->index }})">View Details</a>
-                        <a href="{{ url('/editprofile/'.$profile['id']) }}" class="view-details edit-profile">Edit</a>
                     </div>
                 @endforeach
             </div>
+
             <div class="pagination-links">
                 {{ $profiles->links('pagination::default') }}
             </div>

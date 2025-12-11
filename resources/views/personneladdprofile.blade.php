@@ -30,9 +30,7 @@
                 <h2>Admin Profile</h2>
             </div>
             <nav class="nav">
-                <a href="{{ url('/dashboard') }}">Dashboard</a>
-                <a href="{{ url('/viewprofile') }}" class="active">View Profile</a>
-                <a href="{{ url('/removeprofile') }}">Remove Profile</a>
+                <a href="{{ url('/personnel') }}" class="active">View Profile</a>
             </nav>
         </header>
 

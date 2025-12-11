@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Personel;
 use Illuminate\Http\Request;
@@ -16,21 +17,11 @@ Route::get('/register', function () {
     return view('signup');
 });
 Route::get('/dashboard', function () {
-    Personel::all();
-    return view('dashboard');
+    $servicePersonnel = Personel::where('personnel_type', 'Service')->paginate(10, ['*'], 'service_page');
+    $attachmentPersonnel = Personel::where('personnel_type', 'Attachment')->paginate(10, ['*'], 'attachment_page');
+    return view('dashboard', ['servicePersonnel' => $servicePersonnel, 'attachmentPersonnel' => $attachmentPersonnel]);
 });
-Route::get('/viewprofile', function (Request $request) {
-    $id = $request->input('id');
-
-    if ($id !== null && $id !== '') {
-        // Only perform exact ID lookup when an id parameter is provided
-        $profiles = Personel::where('id', $id)->get();
-    } else {
-        $profiles = Personel::all();
-    }
-
-    return view('viewprofile', ['profiles' => $profiles]);
-});
+Route::get('/viewprofile', [ProfileController::class, 'viewProfile']);
 
 Route::get('/removeprofile', function (Request $request) {
     $query = $request->input('query');
@@ -54,9 +45,20 @@ Route::post('/editprofile', [PostController::class, 'updateProfile']);
 Route::get('/addprofile', function () {
     return view('addprofile');
 });
+Route::get('/personnel', function () {
+    $profiles = Personel::paginate(10); // Fetch profiles with pagination
+    return view('personnel', ['profiles' => $profiles]);
+});
+Route::get('/personnel/add-profile', function () {
+    return view('personneladdprofile');
+});
+Route::get('/personnelsdashboard', function () {
+    return view('personnelsdashboard');
+});
 //post requests
 Route::post('/logout', [UserController::class, 'logout']);
 // Route::post('/register', [UserController::class, 'register']);
+Route::post('/send-admin-code', [UserController::class, 'sendAdminCode']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/removeprofile', [PostController::class, 'removeProfile']);
@@ -64,3 +66,13 @@ Route::post('/searchprofile', [PostController::class, 'searchProfile']);
 Route::post('/addprofile', [UserController::class, 'addProfile']);
 //blog post request
 Route::post('/create_post',[PostController::class, 'createProfile']);
+Route::post('/resend-admin-code', [UserController::class, 'resendAdminCode']);
+Route::post('/logout', function (Request $request) {
+    auth()->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
+Route::get('/login', function () {
+    return view('login');
+});

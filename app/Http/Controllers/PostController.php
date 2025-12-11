@@ -30,7 +30,7 @@ class PostController extends Controller
             'address'=>'required',
             'bio'=>'nullable',
             'program'=>'nullable',
-            'photo' => 'nullable|image|max:2048'
+            'photo' => 'nullable|image|max:4048'
         ]);
             $fieldsToSanitize = [
             'name',
@@ -152,7 +152,7 @@ class PostController extends Controller
             'address'=>'required',
             'bio'=>'nullable',
             'program'=>'nullable',
-            'photo' => 'nullable|image|max:2048',
+            'photo' => 'nullable|image|max:4048',
         ]);
 
         $fieldsToSanitize = [
