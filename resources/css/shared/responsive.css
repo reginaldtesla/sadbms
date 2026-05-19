@@ -1,0 +1,204 @@
+/* Mobile-friendly layouts across SADBMS pages */
+
+/* Auth pages (login / signup) */
+@media (max-width: 480px) {
+    .login-topbar-inner,
+    .signup-topbar-inner {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .login-brand-title,
+    .signup-brand-title {
+        font-size: 1.1rem;
+    }
+
+    .login-signup-link {
+        padding: 0.4rem 0.65rem;
+        font-size: 0.8125rem;
+    }
+
+    .login-card,
+    .signup-card {
+        padding: 1.25rem;
+    }
+
+    .login-role-grid,
+    .signup-role-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .login-main,
+    .signup-main {
+        padding: 1rem 0.75rem;
+        align-items: flex-start;
+        padding-top: 1.5rem;
+    }
+
+    .signup-main {
+        padding-top: 5rem;
+    }
+}
+
+/* Admin & personnel sidebar layouts */
+@media (max-width: 768px) {
+    .dashboard-container,
+    .dashboard,
+    .app-container {
+        flex-direction: column;
+    }
+
+    .dashboard-container .sidebar,
+    .dashboard .sidebar,
+    .app-container .sidebar {
+        width: 100%;
+        min-height: auto;
+        position: relative;
+    }
+
+    .sidebar-header {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0.5rem 0.75rem 1rem;
+        gap: 0.35rem;
+    }
+
+    .nav-links a,
+    .nav-links .nav-item {
+        flex: 1 1 auto;
+        min-width: calc(50% - 0.35rem);
+        margin-bottom: 0;
+        justify-content: center;
+        font-size: 0.8125rem;
+        padding: 0.6rem 0.5rem;
+    }
+
+    .nav-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        padding: 0.5rem 0.75rem 1rem;
+    }
+
+    .nav-list li {
+        flex: 1 1 calc(50% - 0.35rem);
+    }
+
+    .nav-list .nav-item {
+        margin-bottom: 0;
+        justify-content: center;
+    }
+
+    .sidebar-logout-form,
+    .dashboard-container form[style*="absolute"],
+    .dashboard form[style*="absolute"] {
+        position: static !important;
+        width: 100% !important;
+        padding: 0 0.75rem 1rem;
+    }
+
+    .logout-btn,
+    .logout-button {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .logout-container {
+        padding: 0 0.75rem 1rem;
+    }
+
+    .dashboard-container .main-content,
+    .dashboard .main,
+    .app-container .main-content {
+        padding: 1rem;
+    }
+
+    .welcome-box {
+        padding: 1.25rem;
+    }
+
+    .page-container > .header {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-container > .header .nav {
+        width: 100%;
+    }
+
+    .page-container > .header .nav a {
+        flex: 1;
+        text-align: center;
+    }
+
+    .page-container .main-content,
+    .page-container > .main {
+        padding: 1rem;
+    }
+
+    .view-id-search {
+        width: 100%;
+    }
+
+    .view-id-search input,
+    .view-id-search select,
+    .view-id-search button,
+    .view-id-search .reset-link {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .search-form > div,
+    .search-form div[style*="display:flex"] {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .search-form:not(.profile-filter-form) select,
+    .search-form:not(.profile-filter-form) input[type="text"],
+    .search-form:not(.profile-filter-form) button {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .profiles-container {
+        grid-template-columns: 1fr;
+    }
+
+    .form-box {
+        padding: 1.25rem;
+    }
+
+    .personnel-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-content,
+    .modal-content-centered {
+        margin: 1rem auto;
+        max-width: calc(100% - 2rem);
+    }
+
+    .welcome-widget .card.profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 380px) {
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        width: 100%;
+        text-align: center;
+    }
+}

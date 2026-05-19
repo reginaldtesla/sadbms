@@ -1,0 +1,145 @@
+/* Add profile / admin form pages with top nav */
+.page-container > .header:has(.nav) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 2rem;
+}
+
+.page-container > .header .nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.page-container > .header .nav a {
+    color: var(--color-text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background var(--transition), color var(--transition);
+}
+
+.page-container > .header .nav a:hover {
+    background: var(--color-bg);
+    color: var(--color-blue);
+}
+
+.page-container > .header .nav a.active {
+    background: var(--color-gradient-green);
+    color: #fff;
+}
+
+.page-container > .header .page-header {
+    flex: 1;
+    min-width: 200px;
+}
+
+.view-id-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.view-id-search input,
+.view-id-search select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    min-width: 140px;
+}
+
+.view-id-search input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.view-id-search button {
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.view-id-search .reset-link {
+    color: var(--color-blue);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+.view-id-search .reset-link:hover {
+    color: var(--color-blue-dark);
+    background: var(--color-bg);
+}
+
+.page-container .main-content {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.profiles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.profile-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--color-border);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.profile-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.profile-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-card p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.view-details {
+    display: inline-block;
+    margin-top: 0.75rem;
+    margin-right: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    background: var(--color-primary-light);
+    color: var(--color-blue);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.view-details:hover {
+    background: var(--color-blue);
+    color: #fff;
+    border-color: var(--color-blue);
+}
+
+.view-details.edit-profile {
+    background: var(--color-gradient-green);
+    color: #fff;
+    border-color: transparent;
+}
+
+.view-details.edit-profile:hover {
+    filter: brightness(1.05);
+    color: #fff;
+}

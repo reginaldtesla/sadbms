@@ -9,6 +9,13 @@ class Personel extends Model
 {
     use HasFactory;
 
+    public const COMPANY_LOCATIONS = ['Akosombo', 'Akuse', 'Tema'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
@@ -20,6 +27,7 @@ class Personel extends Model
         'supervision_name',
         'assigned_role',
         'institution_name',
+        'company_location',
         'remarks',
         'duration',
         'start_date',

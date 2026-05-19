@@ -1,0 +1,19 @@
+@import './shared/variables.css';
+@import './shared/base.css';
+@import './shared/components.css';
+@import './shared/layout-auth.css';
+@import './shared/responsive.css';
+
+body {
+    background: var(--color-bg);
+}
+
+.page-container {
+    background: transparent;
+}
+
+.modal-content-centered .form-box {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+}

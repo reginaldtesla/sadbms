@@ -1,0 +1,165 @@
+@import './shared/variables.css';
+@import './shared/base.css';
+@import './shared/components.css';
+@import './shared/layout-admin-sidebar.css';
+@import './shared/personnel-sidebar-user.css';
+@import './shared/responsive.css';
+
+.logout-btn {
+    gap: 0.5rem;
+}
+
+.personnel-flash {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.personnel-flash.success {
+    background: var(--color-success-bg);
+    border: 1px solid #bbf7d0;
+    color: #065f46;
+}
+
+.personnel-dashboard-card h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0.25rem;
+    color: var(--color-heading);
+}
+
+.personnel-dashboard-subtitle {
+    color: var(--color-text-muted);
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+}
+
+.personnel-dashboard-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.personnel-dashboard-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primary-light);
+    flex-shrink: 0;
+}
+
+.personnel-dashboard-avatar--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-light);
+    color: var(--color-blue);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.personnel-dashboard-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.personnel-badge {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.personnel-badge--type {
+    background: var(--color-primary-light);
+    color: var(--color-blue-dark);
+}
+
+.personnel-badge--role {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.personnel-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem 1.5rem;
+    margin: 0;
+}
+
+.personnel-detail {
+    margin: 0;
+}
+
+.personnel-detail--full {
+    grid-column: 1 / -1;
+}
+
+.personnel-detail dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.personnel-detail dd {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    word-break: break-word;
+}
+
+.personnel-dashboard-empty {
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.personnel-dashboard-empty h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-heading);
+}
+
+.personnel-dashboard-empty p {
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.personnel-dashboard-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.25rem;
+    border-radius: var(--radius);
+    background: var(--color-gradient-green);
+    color: #fff !important;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+}
+
+.personnel-dashboard-cta:hover {
+    filter: brightness(1.05);
+    color: #fff !important;
+}
+
+@media (max-width: 600px) {
+    .personnel-dashboard-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .personnel-dashboard-badges {
+        justify-content: center;
+    }
+}

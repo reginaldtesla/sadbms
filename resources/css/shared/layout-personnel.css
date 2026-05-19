@@ -1,0 +1,104 @@
+/* Personnel role dashboard — Stitch palette */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-container .sidebar {
+    width: var(--sidebar-width);
+    background: var(--color-sidebar);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0;
+    border-right: 1px solid var(--color-border);
+}
+
+.app-container .logo {
+    color: var(--color-blue);
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0 1.25rem 1.25rem;
+    margin: 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nav-list {
+    list-style: none;
+    padding: 1rem 0.75rem;
+    margin: 0;
+    flex: 1;
+}
+
+.nav-list .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+    color: var(--color-text-muted);
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    transition: background var(--transition), color var(--transition);
+}
+
+.nav-list .nav-item:hover {
+    background: var(--color-bg);
+    color: var(--color-blue);
+}
+
+.nav-list .nav-item.active {
+    background: var(--color-gradient-green);
+    color: #fff;
+}
+
+.nav-list .nav-item.active .material-symbols-outlined {
+    color: #fff;
+}
+
+.logout-container {
+    padding: 0 0.75rem 1rem;
+    margin-top: auto;
+}
+
+.app-container .main-content {
+    flex: 1;
+    padding: 2rem;
+    background: var(--color-bg);
+}
+
+.dashboard-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.welcome-widget .card.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--color-surface);
+    padding: 1.75rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--color-border);
+}
+
+.welcome-widget .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primary-light);
+}
+
+.welcome-title {
+    font-size: 1.35rem;
+    margin-bottom: 0.35rem;
+    color: var(--color-blue);
+}
+
+.welcome-text {
+    color: var(--color-text-muted);
+    margin: 0;
+}

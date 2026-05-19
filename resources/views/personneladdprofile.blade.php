@@ -1,44 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.personnel')
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Add New Profile - Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/build/assets/css/add-profile.css" />
-    <script src="/build/assets/js/addprofile.js" defer></script>
-    <style>
-        .is-invalid {
-            border-color: #dc3545;
-        }
-        .invalid-feedback {
-            color: #dc3545;
-            font-size: 0.875em;
-            margin-top: 0.25rem;
-        }
-    </style>
-</head>
+@section('title', 'Add New Profile - Personnel')
 
-<body>
-    <div class="page-container">
-        <header class="header">
-            <div class="logo">
-                <svg viewBox="0 0 48 48" fill="currentColor">
-                    <path
-                        d="M8.578 8.578C5.528 11.628 3.451 15.514 2.609 19.745C1.768 23.976 2.2 28.361 3.851 32.346C5.501 36.331 8.297 39.738 11.883 42.134C15.47 44.531 19.687 45.81 24 45.81C28.314 45.81 32.53 44.531 36.117 42.134C39.703 39.738 42.499 36.331 44.149 32.346C45.8 28.361 46.232 23.976 45.391 19.745C44.549 15.514 42.472 11.628 39.422 8.578L24 24L8.578 8.578Z" />
-                </svg>
-                <h2>Admin Profile</h2>
+@section('vite')
+    @vite(['resources/css/add-profile.css', 'resources/js/profile-camera.js'])
+@endsection
+
+@section('content')
+    <div class="form-box">
+        <h1>{{ isset($profile) ? 'Update Profile' : 'Add New Profile' }}</h1>
+        <p>
+            @if (isset($profile))
+                You already have a profile on file. Submitting this form will update your existing record.
+            @else
+                Fill in the details below to create your personnel profile.
+            @endif
+        </p>
+        @if ($errors->has('email'))
+            <div style="margin-bottom:1rem;padding:0.75rem;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#991b1b;">
+                {{ $errors->first('email') }}
             </div>
-            <nav class="nav">
-                <a href="{{ url('/personnel') }}" class="active">View Profile</a>
-            </nav>
-        </header>
-
-        <main class="main">
-            <div class="form-box">
-                <h1>Add New Profile</h1>
-                <p>Fill in the details below to create a new user profile.</p>
-                <form method="POST" action="/create_post" enctype="multipart/form-data">
+        @endif
+        <form method="POST" action="/create_post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="photo_data" id="photoData">
 
@@ -101,11 +84,12 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    @include('partials.company-location-field', ['value' => old('company_location', isset($profile) ? $profile->company_location : '')])
                     <div class="form-group">
                         <label for="department">Department</label>
                         <select id="department" name="department" class="@error('department') is-invalid @enderror">
                             <option value="">Select department</option>
-                            <option value="engineering" @if(old('department') == 'engineering') selected @endif>Engineering</option>
+                            <option value="engineering" @if(old('department', $profile->department ?? '') == 'engineering') selected @endif>Engineering</option>
                             <option value="finance" @if(old('department') == 'finance') selected @endif>Finance</option>
                             <option value="hr" @if(old('department') == 'hr') selected @endif>Human Resources</option>
                             <option value="marketing" @if(old('department') == 'marketing') selected @endif>Marketing</option>
@@ -202,17 +186,23 @@
                     </div>
                     <div class="form-group">
                         <label for="photo">Photo</label>
-                        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        @if (isset($profile) && $profile->photo)
+                            <div class="current-profile-photo-wrap">
+                                <p class="current-profile-photo-label">Your current photo</p>
+                                <img
+                                    src="{{ asset('storage/' . $profile->photo) }}"
+                                    alt="Current profile photo for {{ $profile->name }}"
+                                    class="current-profile-photo"
+                                    id="currentProfilePhoto"
+                                />
+                            </div>
+                        @endif
+                        <div style="display:flex;gap:1.25rem;align-items:flex-start;flex-wrap:wrap;">
                             <div style="display:flex;flex-direction:column;gap:6px;">
-                                <video id="video" autoplay playsinline width="320" height="240" style="border:1px solid #ccc;"></video>
-                                <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-                                <div>
-                                    <button type="button" id="startCamera">Start Camera</button>
-                                    <button type="button" id="captureBtn">Capture</button>
-                                </div>
+                                @include('partials.profile-camera')
                             </div>
                             <div>
-                                <p>Or choose file (mobile will offer camera):</p>
+                                <p class="profile-camera-file-hint">Or choose a file (mobile may open the camera):</p>
                                 <input type="file" id="photoInput" name="photo" accept="image/*" capture="environment" class="@error('photo') is-invalid @enderror" />
                                 @error('photo')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -227,46 +217,6 @@
                       Submit
                     </button>
                 </form>
-            </div>
-        </main>
     </div>
-    <script>
-        const startBtn = document.getElementById('startCamera');
-        const video = document.getElementById('video');
-        const captureBtn = document.getElementById('captureBtn');
-        const canvas = document.getElementById('canvas');
-        const photoInput = document.getElementById('photoInput');
-        const photoDataInput = document.getElementById('photoData');
-        let stream = null;
+@endsection
 
-        startBtn.addEventListener('click', async () => {
-            try {
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    alert('Camera access not supported on this browser or page must be served over HTTPS.\nPlease use the file input to select an image instead.');
-                    return;
-                }
-                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
-                video.srcObject = stream;
-                startBtn.textContent = 'Stop Camera';
-            } catch (err) {
-                alert('Unable to access camera: ' + err.message + '\nMake sure the page is accessed over HTTPS or localhost.');
-            }
-        });
-
-        captureBtn.addEventListener('click', () => {
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            photoDataInput.value = dataUrl;
-            // Clear file input if a photo is captured
-            photoInput.value = '';
-        });
-
-        photoInput.addEventListener('change', () => {
-            // Clear photo data if a file is selected
-            photoDataInput.value = '';
-        });
-    </script>
-</body>
-
-</html>

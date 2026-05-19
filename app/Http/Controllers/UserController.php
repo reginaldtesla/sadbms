@@ -14,11 +14,13 @@ class UserController extends Controller
 {
 
 
-     // Handle logout functionality
     public function logout(Request $request)
     {
         auth()->logout();
-        return redirect('/');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('status', 'You have been logged out.');
     }
 //Handle sending admin registration code
     public function sendAdminCode(Request $request)
@@ -134,7 +136,7 @@ class UserController extends Controller
             if ($incomingFields['role'] === 'admin') {
                 return redirect('/dashboard');
             } elseif ($incomingFields['role'] === 'personnel') {
-                return redirect('/personnel');
+                return redirect('/personnelsdashboard');
             }
         }
 

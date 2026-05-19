@@ -5,62 +5,81 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Panel Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="build/assets/css/login.css" />
+    @vite(['resources/css/login.css'])
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
-<body>
-    <div class="signup">
-        <a href="{{ url('/register') }}">Sign Up</a>
-    </div>
-    <div class="container">
-        <header class="header">
-            <h1>Admin Panel</h1>
+<body class="login-page">
+    <div class="login-layout">
+        <header class="login-topbar">
+            <div class="login-topbar-inner">
+                <h1 class="login-brand-title">Admin Panel</h1>
+                <a href="{{ url('/register') }}" class="login-signup-link">Sign Up</a>
+            </div>
         </header>
 
-        <main class="main">
-            <div class="login-box">
-                <div class="login-header">
-                    <h2>Welcome Back</h2>
-                    <p>Sign in to manage your profiles</p>
+        <main class="login-main">
+            <div class="login-card-wrap">
+                <div class="login-card">
+                    <div class="login-card-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to manage your profiles</p>
+                    </div>
+
+                    @if (session('status'))
+                        <div class="login-alert login-alert--success">{{ session('status') }}</div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="login-alert login-alert--error">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ url('/login') }}" class="login-form">
+                        @csrf
+
+                        <fieldset class="login-role-fieldset">
+                            <legend class="sr-only">Login as</legend>
+                            <div class="login-role-grid">
+                                <div>
+                                    <input class="login-role-input" type="radio" name="role" id="admin_login"
+                                        value="admin" {{ old('role', 'admin') === 'admin' ? 'checked' : '' }} />
+                                    <label class="login-role-label" for="admin_login">Admin Login</label>
+                                </div>
+                                <div>
+                                    <input class="login-role-input" type="radio" name="role" id="personnel_login"
+                                        value="personnel" {{ old('role') === 'personnel' ? 'checked' : '' }} />
+                                    <label class="login-role-label" for="personnel_login">Personnel Login</label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="login-input-group">
+                            <span class="material-symbols-outlined login-input-icon" aria-hidden="true">person</span>
+                            <input type="text" id="username" name="loginname" value="{{ old('loginname') }}"
+                                placeholder="Username" autocomplete="username" required />
+                        </div>
+
+                        <div class="login-input-group">
+                            <span class="material-symbols-outlined login-input-icon" aria-hidden="true">lock</span>
+                            <input type="password" id="password" name="loginpassword" placeholder="Password"
+                                autocomplete="current-password" required />
+                        </div>
+
+                        <div class="login-forgot">
+                            <a href="{{ route('password.request') }}">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="login-submit">Login</button>
+                    </form>
                 </div>
-                <form method="POST" action="/login">
-                    @csrf
-                    <div class="tabs">
-                        <button type="button" class="tab-button active" data-role="admin">Admin Login</button>
-                        <button type="button" class="tab-button" data-role="personnel">Personnel Login</button>
-                    </div>
-                    <input type="hidden" name="role" id="role" value="admin" />
-                    <div class="input-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="loginname" placeholder="Username" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="loginpassword" placeholder="Password" required />
-                    </div>
-                    <div class="forgot">
-                        <a href="#">Forgot password?</a>
-                    </div>
-                    <button type="submit" class="login-btn">Login</button>
-                </form>
             </div>
         </main>
     </div>
-
-    <script>
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', function () {
-                const role = this.dataset.role;
-                document.getElementById('role').value = role;
-
-                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-
-                alert(`You have selected ${role} login.`);
-            });
-        });
-    </script>
 </body>
 
 </html>

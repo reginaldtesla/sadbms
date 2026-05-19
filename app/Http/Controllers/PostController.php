@@ -3,36 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\Personel;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
     //create profile
-    public function createProfile(Request $request){
+    public function createProfile(Request $request)
+    {
+        $user = auth()->user();
+        $existingProfile = null;
+
+        if ($user->role === 'personnel') {
+            $existingProfile = Personel::where('user_id', $user->id)->first();
+
+            if (! $existingProfile && $user->email) {
+                $existingProfile = Personel::where('email', $user->email)->first();
+            }
+        }
+
+        $emailRules = ['required', 'email'];
+        $emailRules[] = $existingProfile
+            ? Rule::unique('personels', 'email')->ignore($existingProfile->id)
+            : Rule::unique('personels', 'email');
+
         $incomingFields = $request->validate([
-            'name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required|integer',
-            'age'=>'required|integer',
-            'gender'=>'required',
-            'personnel_type'=>'required',
-            'department'=>'required',
-            'supervision_name'=>'required',
-            'assigned_role'=>'nullable',
-            'institution_name'=>'required',
-            'remarks'=>'nullable',
-            'duration'=>'required',
-            'start_date'=>'required|date',
-            'end_date'=>'required|date',
-            'address'=>'required',
-            'bio'=>'nullable',
-            'program'=>'nullable',
-            'photo' => 'nullable|image|max:4048'
+            'name' => 'required|string|max:255',
+            'email' => $emailRules,
+            'phone' => 'required|string|max:30',
+            'age' => 'required|integer|min:1|max:120',
+            'gender' => 'required|in:male,female,other,Male,Female,Other',
+            'personnel_type' => 'required',
+            'department' => 'required',
+            'supervision_name' => 'required',
+            'assigned_role' => 'nullable',
+            'institution_name' => 'required',
+            'company_location' => ['required', Rule::in(Personel::COMPANY_LOCATIONS)],
+            'remarks' => 'nullable',
+            'duration' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'address' => 'required',
+            'bio' => 'nullable',
+            'program' => 'nullable',
+            'photo' => 'nullable|image|max:4048',
         ]);
-            $fieldsToSanitize = [
+
+        $fieldsToSanitize = [
             'name',
             'email',
             'phone',
@@ -40,7 +60,7 @@ class PostController extends Controller
             'supervision_name',
             'institution_name',
             'address',
-            'program'
+            'program',
         ];
 
         foreach ($fieldsToSanitize as $field) {
@@ -49,16 +69,16 @@ class PostController extends Controller
             }
         }
 
-        // handle uploaded photo (file input or captured blob appended by JS)
+        $incomingFields['gender'] = ucfirst(strtolower($incomingFields['gender']));
+
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('personel_photos', 'public');
             $incomingFields['photo'] = $path;
         } elseif ($request->filled('photo_data')) {
-            // handle base64 photo data (not used by current view but supported)
             $data = $request->input('photo_data');
             if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
                 $data = substr($data, strpos($data, ',') + 1);
-                $type = strtolower($type[1]); // jpg, png, gif
+                $type = strtolower($type[1]);
                 $data = base64_decode($data);
                 $fileName = 'personel_' . time() . '.' . $type;
                 Storage::disk('public')->put('personel_photos/' . $fileName, $data);
@@ -66,11 +86,27 @@ class PostController extends Controller
             }
         }
 
-        $incomingFields['user_id'] = auth()->id();
-        Personel::create($incomingFields);
-        // return redirect('')->with('');
-        return response("<script>alert('success','Profile created successfully!'); window.location.href = '/viewprofile';</script>");
-        // return redirect('/profiles/create');
+        $incomingFields['user_id'] = $user->id;
+
+        if ($existingProfile && $user->role === 'personnel') {
+            $existingProfile->update($incomingFields);
+
+            return redirect('/personnelsdashboard')->with('status', 'Profile updated successfully!');
+        }
+
+        try {
+            Personel::create($incomingFields);
+        } catch (UniqueConstraintViolationException) {
+            return back()
+                ->withErrors(['email' => 'This email is already used by another profile.'])
+                ->withInput();
+        }
+
+        if ($user->role === 'personnel') {
+            return redirect('/personnelsdashboard')->with('status', 'Profile created successfully!');
+        }
+
+        return redirect('/viewprofile')->with('status', 'Profile created successfully!');
     }
     //search profile
     public function searchProfile(Request $request){
@@ -109,7 +145,12 @@ class PostController extends Controller
     }
 
     // remove profile (handles deletion from removeprofile view)
-    public function removeProfile(Request $request){
+    public function removeProfile(Request $request)
+    {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Only administrators can remove profiles.');
+        }
+
         $request->validate([
             'delete_id' => 'required|integer|exists:personels,id',
         ]);
@@ -145,6 +186,7 @@ class PostController extends Controller
             'supervision_name'=>'required',
             'assigned_role'=>'nullable',
             'institution_name'=>'required',
+            'company_location' => ['required', Rule::in(Personel::COMPANY_LOCATIONS)],
             'remarks'=>'nullable',
             'duration'=>'required',
             'start_date'=>'required|date',

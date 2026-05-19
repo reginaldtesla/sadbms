@@ -1,0 +1,293 @@
+/* Admin sidebar — white bar, blue title, green active (Stitch dashboard) */
+.dashboard-container,
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+.dashboard-container .sidebar,
+.dashboard .sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--color-sidebar);
+    color: var(--color-sidebar-text);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    border-right: 1px solid var(--color-sidebar-border);
+    box-shadow: 1px 0 0 rgba(0, 0, 0, 0.04);
+}
+
+.sidebar-header {
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid var(--color-sidebar-border);
+}
+
+.sidebar-header h1 {
+    color: var(--color-blue);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0.75rem;
+    flex: 1;
+    gap: 0.35rem;
+}
+
+.nav-links a,
+.nav-links .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+    color: var(--color-sidebar-text);
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background var(--transition), color var(--transition);
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.nav-links a:hover,
+.nav-links .nav-item:hover {
+    background: var(--color-sidebar-hover);
+    color: var(--color-navy);
+}
+
+.nav-links a.active,
+.nav-links .nav-item.active {
+    background: var(--color-gradient-green);
+    color: #fff;
+    border-color: transparent;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+}
+
+.nav-links a.active .material-symbols-outlined,
+.nav-links .nav-item.active .material-symbols-outlined {
+    color: #fff;
+}
+
+.sidebar-logout-form,
+.dashboard-container form[style*="absolute"],
+.dashboard form[style*="absolute"] {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 0 0.75rem;
+    margin: 0;
+}
+
+.logout-btn,
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin: 0;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface) !important;
+    color: var(--color-navy) !important;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    box-shadow: none;
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        color var(--transition);
+}
+
+.logout-btn .material-symbols-outlined,
+.logout-button .material-symbols-outlined {
+    font-size: 1.25rem;
+    color: var(--color-navy);
+}
+
+.logout-btn:hover,
+.logout-button:hover {
+    background: var(--color-sidebar-hover) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-navy) !important;
+    box-shadow: none;
+}
+
+.logout-btn:focus-visible,
+.logout-button:focus-visible {
+    outline: none;
+    background: var(--color-sidebar-hover) !important;
+    border-color: var(--color-blue) !important;
+    color: var(--color-navy) !important;
+    box-shadow: var(--focus-ring);
+}
+
+.logout-btn:active,
+.logout-button:active {
+    background: var(--color-primary-light) !important;
+    border-color: var(--color-blue) !important;
+    color: var(--color-blue-dark) !important;
+    box-shadow: none;
+}
+
+.dashboard-container .main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-x: auto;
+    background: var(--color-bg);
+}
+
+.dashboard .main {
+    flex: 1;
+    padding: 2rem;
+    background: var(--color-bg);
+    overflow-x: auto;
+}
+
+.welcome-box {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--color-border);
+}
+
+.welcome-box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-heading);
+}
+
+.welcome-box > p {
+    color: var(--color-text-muted);
+    max-width: 720px;
+}
+
+/* Service / Attachment tabs in dashboard */
+.welcome-box .tabs {
+    border-bottom: none;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.welcome-box .tab-button {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    margin-bottom: 0;
+    padding: 0.6rem 1.25rem;
+    background: var(--color-surface);
+}
+
+.welcome-box .tab-button.active {
+    background: var(--color-gradient-green);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+}
+
+.dashboard .main h2,
+.dashboard .content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-heading);
+}
+
+.dashboard .main > p,
+.dashboard .content > p {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.search-form {
+    background: var(--color-surface);
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--color-border);
+}
+
+.search-form select,
+.search-form input[type="text"] {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    min-width: 180px;
+}
+
+.search-form button[type="submit"] {
+    width: auto;
+    padding: 0.6rem 1.25rem;
+}
+
+.results-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+
+.results-list li,
+.result-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.result-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.result-item:hover {
+    border-color: var(--color-blue);
+    background: #fafbfc;
+}
+
+.result-item input[type="radio"] {
+    margin-top: 0.25rem;
+}
+
+.result-info .small {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.search-input input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+.search-input button {
+    width: auto;
+    padding: 0.65rem 1.25rem;
+}
+
+.search-input .material-symbols-outlined {
+    color: var(--color-text-muted);
+}

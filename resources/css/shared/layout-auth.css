@@ -1,0 +1,180 @@
+/* Login & signup auth pages */
+body:has(.login-box),
+body:has(.page-container > .header .logo) {
+    min-height: 100vh;
+}
+
+/* Legacy login-box pages */
+body:has(.login-box) {
+    background: #e0f2fe;
+}
+
+.signup {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    z-index: 10;
+}
+
+.signup a {
+    color: var(--color-blue);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: #fff;
+}
+
+.signup a:hover {
+    background: var(--color-primary-light);
+    color: var(--color-blue-dark);
+}
+
+body:has(.login-box) .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+body:has(.login-box) .header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+}
+
+body:has(.login-box) .header h1 {
+    color: var(--color-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+body:has(.login-box) .header h1::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: var(--color-blue);
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+body:has(.login-box) .main {
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-box {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-header h2 {
+    font-size: 1.5rem;
+    color: var(--color-text);
+}
+
+.login-header p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.forgot {
+    text-align: right;
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+}
+
+.login-btn {
+    margin-top: 0.5rem;
+}
+
+/* Signup / register page-container */
+.page-container {
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.page-container > .header {
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: 1rem 2rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.page-container > .header .header-inner,
+.page-container > .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.page-container .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.page-container .logo svg {
+    width: 40px;
+    height: 40px;
+    color: var(--color-blue);
+}
+
+.page-container .logo h1,
+.page-container .logo h2 {
+    color: var(--color-blue);
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.page-container > .main {
+    max-width: 520px;
+    margin: 2rem auto;
+    padding: 0 1rem 3rem;
+}
+
+.form-box {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+}
+
+.form-box h1,
+.form-box h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.35rem;
+}
+
+.form-box > p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-box a {
+    font-weight: 600;
+}
+
+.form-box [style*="color: green"] {
+    color: var(--color-success) !important;
+    background: var(--color-success-bg);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid #bbf7d0;
+}

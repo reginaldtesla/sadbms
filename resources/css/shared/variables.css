@@ -1,0 +1,38 @@
+:root {
+    /* Stitch admin theme (login reference + dashboard reference) */
+    --color-blue: #2563eb;
+    --color-blue-dark: #1d4ed8;
+    --color-blue-light: #eff6ff;
+    --color-navy: #1e293b;
+    --color-heading: #0f172a;
+
+    --color-primary: var(--color-blue);
+    --color-primary-dark: var(--color-blue-dark);
+    --color-primary-light: var(--color-blue-light);
+    --color-gradient: linear-gradient(to right, #84cc16, #22c55e);
+    --color-gradient-green: linear-gradient(to right, #4ade80, #16a34a);
+
+    --color-sidebar: #ffffff;
+    --color-sidebar-hover: #f3f4f6;
+    --color-sidebar-text: #4b5563;
+    --color-sidebar-border: #e5e7eb;
+
+    --color-bg: #f0f4f8;
+    --color-surface: #ffffff;
+    --color-text: #1f2937;
+    --color-text-muted: #6b7280;
+    --color-border: #e5e7eb;
+    --color-danger: #dc3545;
+    --color-danger-bg: #fef2f2;
+    --color-success: #059669;
+    --color-success-bg: #ecfdf5;
+    --color-warning-bg: #fffbeb;
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --sidebar-width: 260px;
+    --transition: 0.2s ease;
+    --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}

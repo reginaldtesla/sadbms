@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="/build/assets/css/edit-profile.css" />
+    @vite(['resources/css/edit-profile.css'])
 </head>
 <body>
     <div class="page-container">
@@ -92,6 +93,8 @@
                             <label for="institution_name">Institution Name</label>
                             <input type="text" id="institution_name" name="institution_name" value="{{ $profile->institution_name }}" required />
                         </div>
+
+                        @include('partials.company-location-field', ['value' => $profile->company_location])
 
                         <div class="form-group">
                             <label for="duration">Duration</label>
@@ -227,4 +230,5 @@
         }
     })();
 </script>
+@include('partials.prevent-back-cache')
 </html>

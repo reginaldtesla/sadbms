@@ -15,27 +15,34 @@ class ProfileController extends Controller
      */
     public function viewProfile(Request $request)
     {
-        // Start a new query on the Personel model
+        return view('viewprofile', $this->listingData($request));
+    }
+
+    public function personnelProfiles(Request $request)
+    {
+        return view('personnel', $this->listingData($request));
+    }
+
+    private function listingData(Request $request): array
+    {
         $query = Personel::query();
 
-        // Get the 'name' and 'year' from the search form
-        $name = $request->input('name');
-        $year = $request->input('year');
-
-        // If a name was provided, filter the results by name
-        if ($name) {
-            $query->where('name', 'like', '%' . $name . '%');
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
         }
 
-        // If a year was selected, filter by the 'start_date' column
-        if ($year) {
-            $query->whereYear('start_date', $year);
+        if ($request->filled('year')) {
+            $query->whereYear('start_date', $request->input('year'));
         }
 
-        // Paginate the results and ensure filters are kept on pagination links
-        $profiles = $query->orderBy('created_at', 'desc')->paginate(10)->appends($request->except('page'));
+        $companyLocation = $request->input('company_location');
+        if ($companyLocation && in_array($companyLocation, Personel::COMPANY_LOCATIONS, true)) {
+            $query->where('company_location', $companyLocation);
+        }
 
-        // Return the view and pass the profiles data to it
-        return view('viewprofile', compact('profiles'));
+        return [
+            'profiles' => $query->orderBy('created_at', 'desc')->paginate(10)->appends($request->except('page')),
+            'companyLocations' => Personel::COMPANY_LOCATIONS,
+        ];
     }
 }
