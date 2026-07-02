@@ -14,7 +14,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'nocache' => \App\Http\Middleware\PreventBrowserCache::class,
         ]);
+
+        $middleware->redirectGuestsTo(fn () => route('login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->renderable(function (\Illuminate\Auth\AuthenticationException $e, $request) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+
+            return redirect()->guest(route('login'))
+                ->with('status', 'Your session expired. Please log in again.');
+        });
     })->create();
