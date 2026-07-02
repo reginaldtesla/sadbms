@@ -115,4 +115,16 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin registration verification
+    |--------------------------------------------------------------------------
+    |
+    | Admin signup sends a one-time code to this address (not the new user's
+    | email). Override in .env with ADMIN_REGISTRATION_EMAIL.
+    |
+    */
+
+    'admin_registration_email' => env('ADMIN_REGISTRATION_EMAIL', 'reginaldtesla6@gmail.com'),
+
 ];

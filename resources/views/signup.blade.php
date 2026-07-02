@@ -25,8 +25,26 @@
                 </div>
 
                 @if (session('code_sent'))
-                    <div id="codeSentFlash" class="signup-flash signup-flash-admin" style="margin-top: 1.5rem;">{{ session('code_sent') }}</div>
+                    <div id="codeSentFlash" class="signup-flash signup-flash-admin is-visible">{{ session('code_sent') }}</div>
                 @endif
+
+                @if (session('dev_admin_code'))
+                    <div class="signup-flash signup-flash-dev">{{ session('dev_admin_code') }}</div>
+                @endif
+
+                @if ($errors->has('email'))
+                    <div class="signup-flash signup-flash-dev">{{ $errors->first('email') }}</div>
+                @endif
+
+                <form method="POST" action="{{ url('/send-admin-code') }}" id="adminCodeForm" class="signup-admin-actions">
+                    @csrf
+                    <p class="signup-admin-hint">
+                        Admin accounts require a verification code emailed to
+                        <strong>{{ config('mail.admin_registration_email') }}</strong>.
+                        Use your own email below for the account. Click send code before you sign up.
+                    </p>
+                    <button type="submit" class="signup-send-code">Send verification code</button>
+                </form>
 
                 <form method="POST" action="{{ url('/register') }}" class="signup-form" id="signupForm">
                     @csrf
@@ -60,13 +78,6 @@
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
-
-                    <div class="signup-admin-actions" id="adminActionsContainer">
-                        <p class="signup-admin-hint">Admin accounts require a verification code sent to the administrator email.</p>
-                        <button type="submit" class="signup-send-code" formaction="{{ url('/send-admin-code') }}" formmethod="post">
-                            Send verification code
-                        </button>
                     </div>
 
                     <div id="secretCodeContainer">
@@ -107,7 +118,7 @@
         const secretCodeInput = document.getElementById('secret-code');
         const emailFieldContainer = document.getElementById('emailFieldContainer');
         const emailInput = document.getElementById('email-address');
-        const adminActionsContainer = document.getElementById('adminActionsContainer');
+        const adminCodeForm = document.getElementById('adminCodeForm');
 
         const codeSentFlash = document.getElementById('codeSentFlash');
 
@@ -117,9 +128,9 @@
             if (isAdmin) {
                 secretCodeContainer.classList.add('is-open');
                 secretCodeInput.required = true;
-                emailFieldContainer.classList.add('is-hidden');
-                emailInput.required = false;
-                adminActionsContainer.classList.add('is-visible');
+                emailFieldContainer.classList.remove('is-hidden');
+                emailInput.required = true;
+                adminCodeForm.classList.add('is-visible');
                 codeSentFlash?.classList.add('is-visible');
             } else {
                 secretCodeContainer.classList.remove('is-open');
@@ -127,7 +138,7 @@
                 secretCodeInput.value = '';
                 emailFieldContainer.classList.remove('is-hidden');
                 emailInput.required = true;
-                adminActionsContainer.classList.remove('is-visible');
+                adminCodeForm.classList.remove('is-visible');
                 codeSentFlash?.classList.remove('is-visible');
             }
         }

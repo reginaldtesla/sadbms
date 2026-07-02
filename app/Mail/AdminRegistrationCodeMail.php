@@ -30,7 +30,8 @@ class AdminRegistrationCodeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.admin_code')
-                    ->with(['code' => $this->code]);
+        return $this->subject('SADBMS admin registration code')
+            ->view('emails.admin_code')
+            ->with(['code' => $this->code]);
     }
 }
