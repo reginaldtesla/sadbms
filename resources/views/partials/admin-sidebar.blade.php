@@ -1,6 +1,9 @@
 <aside class="sidebar">
     <div class="sidebar-header">
-        <h1>Admin Panel</h1>
+        <h1 class="sidebar-brand">
+            <img src="{{ asset('images/logo-192.png') }}" alt="SADBMS" class="brand-logo" width="32" height="32">
+            <span>Admin Panel</span>
+        </h1>
     </div>
     <nav class="nav-links">
         @php

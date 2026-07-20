@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Panel Login</title>
+    <title>SADBMS Login</title>
+    @include('partials.favicon')
     @vite(['resources/css/login.css'])
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -14,7 +15,10 @@
     <div class="login-layout">
         <header class="login-topbar">
             <div class="login-topbar-inner">
-                <h1 class="login-brand-title">Admin Panel</h1>
+                <h1 class="login-brand-title">
+                    <img src="{{ asset('images/logo-192.png') }}" alt="SADBMS" class="brand-logo" width="32" height="32">
+                    <span>SADBMS</span>
+                </h1>
                 <a href="{{ url('/register') }}" class="login-signup-link">Sign Up</a>
             </div>
         </header>
@@ -24,7 +28,7 @@
                 <div class="login-card">
                     <div class="login-card-header">
                         <h2>Welcome Back</h2>
-                        <p>Sign in to manage your profiles</p>
+                        <p>Sign in with your account</p>
                     </div>
 
                     @if (session('status'))
@@ -41,22 +45,6 @@
 
                     <form method="POST" action="{{ url('/login') }}" class="login-form">
                         @csrf
-
-                        <fieldset class="login-role-fieldset">
-                            <legend class="sr-only">Login as</legend>
-                            <div class="login-role-grid">
-                                <div>
-                                    <input class="login-role-input" type="radio" name="role" id="admin_login"
-                                        value="admin" {{ old('role', 'admin') === 'admin' ? 'checked' : '' }} />
-                                    <label class="login-role-label" for="admin_login">Admin Login</label>
-                                </div>
-                                <div>
-                                    <input class="login-role-input" type="radio" name="role" id="personnel_login"
-                                        value="personnel" {{ old('role') === 'personnel' ? 'checked' : '' }} />
-                                    <label class="login-role-label" for="personnel_login">Personnel Login</label>
-                                </div>
-                            </div>
-                        </fieldset>
 
                         <div class="login-input-group">
                             <span class="material-symbols-outlined login-input-icon" aria-hidden="true">person</span>

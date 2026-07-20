@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Forgot Password - SADBMS</title>
+    @include('partials.favicon')
     @vite(['resources/css/login.css'])
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -14,7 +15,10 @@
     <div class="login-layout">
         <header class="login-topbar">
             <div class="login-topbar-inner">
-                <h1 class="login-brand-title">Admin Panel</h1>
+                <h1 class="login-brand-title">
+                    <img src="{{ asset('images/logo-192.png') }}" alt="SADBMS" class="brand-logo" width="32" height="32">
+                    <span>Admin Panel</span>
+                </h1>
                 <a href="{{ url('/login') }}" class="login-signup-link">Back to Login</a>
             </div>
         </header>

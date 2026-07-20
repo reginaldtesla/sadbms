@@ -151,20 +151,14 @@ class UserController extends Controller
         $incomingFields = $request->validate([
             'loginname' => 'required',
             'loginpassword' => 'required',
-            'role' => 'required|in:admin,personnel',
         ]);
 
         if (auth()->attempt(['name' => $incomingFields['loginname'], 'password' => $incomingFields['loginpassword']])) {
             $request->session()->regenerate();
 
             $user = auth()->user();
-            if ($user->role !== $incomingFields['role']) {
-                auth()->logout();
 
-                return redirect('/')->withErrors(['loginname' => 'You are not authorized to log in as '.$incomingFields['role'].'.']);
-            }
-
-            if ($incomingFields['role'] === 'admin') {
+            if ($user->role === 'admin') {
                 return redirect('/dashboard');
             }
 

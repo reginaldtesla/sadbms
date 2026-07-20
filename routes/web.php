@@ -32,8 +32,17 @@ Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'
 Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
 
-// Authenticated routes
+// Shared authenticated routes
 Route::middleware(['auth', 'nocache'])->group(function () {
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+    // Both roles submit profile create/update from their add-profile forms
+    Route::post('/create_post', [PostController::class, 'createProfile'])
+        ->middleware('role:admin,personnel');
+});
+
+// Admin-only routes
+Route::middleware(['auth', 'nocache', 'role:admin'])->group(function () {
     Route::get('/dashboard', function () {
         $servicePersonnel = Personel::where('personnel_type', 'Service')->paginate(10, ['*'], 'service_page');
         $attachmentPersonnel = Personel::where('personnel_type', 'Attachment')->paginate(10, ['*'], 'attachment_page');
@@ -72,9 +81,10 @@ Route::middleware(['auth', 'nocache'])->group(function () {
     Route::get('/addprofile', function () {
         return view('addprofile');
     });
+});
 
-    Route::post('/create_post', [PostController::class, 'createProfile']);
-
+// Personnel-only routes
+Route::middleware(['auth', 'nocache', 'role:personnel'])->group(function () {
     Route::get('/personnel', [ProfileController::class, 'personnelProfiles']);
 
     Route::get('/personnel/add-profile', function () {
@@ -93,6 +103,4 @@ Route::middleware(['auth', 'nocache'])->group(function () {
 
         return view('personnelsdashboard', compact('profile'));
     });
-
-    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 });

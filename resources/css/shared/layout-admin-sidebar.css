@@ -24,11 +24,23 @@
     border-bottom: 1px solid var(--color-sidebar-border);
 }
 
-.sidebar-header h1 {
+.sidebar-header h1,
+.sidebar-header .sidebar-brand {
     color: var(--color-blue);
     font-size: 1.15rem;
     font-weight: 700;
     margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.sidebar-header .brand-logo {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.45rem;
+    flex-shrink: 0;
 }
 
 .nav-links {

@@ -59,6 +59,17 @@ body.signup-page {
     font-size: 1.5rem;
     font-weight: 700;
     color: #111827;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.brand-logo {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.45rem;
+    flex-shrink: 0;
 }
 
 .signup-main {

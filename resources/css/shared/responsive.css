@@ -23,7 +23,6 @@
         padding: 1.25rem;
     }
 
-    .login-role-grid,
     .signup-role-grid {
         grid-template-columns: 1fr;
     }

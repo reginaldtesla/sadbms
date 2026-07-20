@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'nocache' => \App\Http\Middleware\PreventBrowserCache::class,
+            'role' => \App\Http\Middleware\EnsureUserRole::class,
         ]);
 
         $middleware->redirectGuestsTo(fn () => route('login'));

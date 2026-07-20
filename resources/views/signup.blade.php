@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Portal - Register</title>
+    @include('partials.favicon')
     @vite(['resources/css/signup.css'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
@@ -12,7 +13,10 @@
 <body class="signup-page">
     <header class="signup-topbar">
         <div class="signup-topbar-inner">
-            <h1 class="signup-brand-title">Admin Portal</h1>
+            <h1 class="signup-brand-title">
+                <img src="{{ asset('images/logo-192.png') }}" alt="SADBMS" class="brand-logo" width="32" height="32">
+                <span>Admin Portal</span>
+            </h1>
         </div>
     </header>
 
